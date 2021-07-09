@@ -1,11 +1,11 @@
-import React from 'react'
-import Styled from 'styled-components'
-import RoomParent from './RoomParent'
-import RoomChildren from './RoomChildren'
+import React, { useState, useEffect } from "react";
+import Styled from "styled-components";
+import RoomParent from "./RoomParent";
+import RoomChildren from "./RoomChildren";
+import { useNumberPicker } from "../hooks/useNumberPicker";
 
 const RoomDiv = Styled.div`
-`
-
+`;
 
 const Roomtitle = Styled.div`
     position: static;
@@ -35,26 +35,27 @@ const Roomtitle = Styled.div`
     order: 0;
     flex-grow: 1;
     // margin: 0px 16px;
-`
+`;
 
+export default function Room({ distributionIndex }) {
+  const { distribution } = useNumberPicker();
+  const [number, setNumber] = useState();
 
-export default function Room() {
+  useEffect(() => {
+    if (distribution) {
+      setNumber(
+        () =>
+          distribution[distributionIndex].adult +
+          distribution[distributionIndex].child
+      );
+    }
+  }, [distribution]);
 
-    // const TempPeopleType = [{
-    //         type: '大人',
-    //         yearFloor: '20'
-    //     },{
-    //         type: '小孩',
-    //         yearFloor: '0'
-    //     }
-    // ]
-
-    return (
-        <RoomDiv>
-            <Roomtitle>房間：2人</Roomtitle>
-            <RoomParent></RoomParent>
-            <RoomChildren></RoomChildren>
-            
-        </RoomDiv>
-    )
+  return (
+    <RoomDiv>
+      <Roomtitle>房間：{number}人</Roomtitle>
+      <RoomParent distributionIndex={distributionIndex}></RoomParent>
+      <RoomChildren distributionIndex={distributionIndex}></RoomChildren>
+    </RoomDiv>
+  );
 }
