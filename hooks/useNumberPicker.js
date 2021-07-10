@@ -8,6 +8,16 @@ export function useNumberPicker() {
   return useContext(NumberPickerData);
 }
 
+const deepCopyDistribution = (arr) => {
+  let newArr = [];
+  arr.map((ele) => {
+    let element = JSON.stringify(ele);
+    newArr.push(JSON.parse(element));
+  });
+
+  return newArr;
+};
+
 function NumberPickerProvider({ children }) {
   const types = [
     {
@@ -42,6 +52,47 @@ function NumberPickerProvider({ children }) {
     setDistribution(() => updateDistributtionArr);
   };
 
+  const handleChange = (e, changeType, roomId, type) => {
+    let updateDistribution = deepCopyDistribution(distribution);
+    let changeValue = 0;
+    let pairValue = 0;
+
+    // read current value
+    if (type === "大人") {
+      changeValue = updateDistribution[roomId].adult;
+      pairValue = updateDistribution[roomId].child;
+    } else if (type === "小孩") {
+      changeValue = updateDistribution[roomId].child;
+      pairValue = updateDistribution[roomId].adult;
+    }
+
+    // get new value
+    if (changeType === "input") {
+      changeValue = parseInt(e.target.value);
+    } else if (changeType === "minus") {
+      changeValue -= 1;
+    } else if (changeType === "plus") {
+      changeValue += 1;
+    }
+
+    // check if in range
+    if (
+      (changeValue + pairValue > rooms[roomId].max) |
+      (changeValue + pairValue < rooms[roomId].min) |
+      (changeValue < 0)
+    ) {
+      return;
+    }
+
+    if (type === "大人") {
+      updateDistribution[roomId].adult = changeValue;
+    } else if (type === "小孩") {
+      updateDistribution[roomId].child = changeValue;
+    }
+    console.log("update dis:", updateDistribution);
+    setDistribution(() => updateDistribution);
+  };
+
   useEffect(() => {
     handleDistribution();
   }, []);
@@ -54,6 +105,7 @@ function NumberPickerProvider({ children }) {
     distribution,
     setDistribution,
     types,
+    handleChange,
   };
 
   return (

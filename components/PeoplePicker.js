@@ -78,8 +78,9 @@ const InputForm = Styled.input`
     flex: none;
     order: 1;
     flex-grow: 0;
-    margin: 0px 4px;
+    margin: 0px 4px;  
 `;
+
 const RightButtonIcon = Styled.button`
 
     /* Auto Layout */
@@ -131,12 +132,8 @@ const Plus = Styled.div`
 `;
 
 const PeoplePicker = ({ distributionIndex, type }) => {
-  const { distribution } = useNumberPicker();
+  const { distribution, handleChange } = useNumberPicker();
   const [inputNum, setInputNum] = useState();
-
-  const handleChange = () => {
-    console.log("into handle change, ");
-  };
 
   useEffect(() => {
     if (distribution) {
@@ -152,10 +149,7 @@ const PeoplePicker = ({ distributionIndex, type }) => {
     <PeoplePickerDiv>
       <LeftButtonIcon
         key="minusBtn"
-        onChange={(e) => {
-          console.log("minus been onChange");
-        }}
-        onClick={() => handleChange()}
+        onClick={(e) => handleChange(e, "minus", distributionIndex, type.type)}
         type="button"
       >
         <Minus></Minus>
@@ -164,12 +158,14 @@ const PeoplePicker = ({ distributionIndex, type }) => {
       <InputForm
         type="text"
         defaultValue={inputNum}
-        onChange={(e) => {
-          console.log("input change");
-        }}
+        onChange={(e) => handleChange(e, "input", distributionIndex, type.type)}
       />
 
-      <RightButtonIcon key="plusBtn" onClick={handleChange} type="button">
+      <RightButtonIcon
+        key="plusBtn"
+        onClick={(e) => handleChange(e, "plus", distributionIndex, type.type)}
+        type="button"
+      >
         <Plus></Plus>
       </RightButtonIcon>
     </PeoplePickerDiv>
