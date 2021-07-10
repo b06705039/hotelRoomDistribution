@@ -4,32 +4,12 @@ import Styled from "styled-components";
 import { useNumberPicker } from "../hooks/useNumberPicker";
 
 const PeoplePickerDiv = Styled.div`
-    /* Auto Layout */
-
     display: flex;
     flex-direction: row;
-    align-items: flex-start;
     padding: 0px;
-
-    position: static;
-    width: 136px;
-    height: 40px;
-    left: 207px;
-    top: 0px;
-
-
-    /* Inside Auto Layout */
-
-    flex: none;
-    order: 1;
-    flex-grow: 0;
-    // margin: 0px 16px;
-
 `;
 
-const LeftButtonIcon = Styled.button`
-    /* Auto Layout */
-
+const ButtonIcon = Styled.button`
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -39,21 +19,13 @@ const LeftButtonIcon = Styled.button`
     width: 40px;
     height: 40px;
 
-    /* Neutral / 01 - #FFFFFF */
-
     background: #FFFFFF;
     opacity: 0.48;
-    /* Primary / 06 - #1E9FD2 */
 
     border: 1px solid #1E9FD2;
     box-sizing: border-box;
     border-radius: 4px;
 
-    /* Inside Auto Layout */
-
-    flex: none;
-    order: 0;
-    flex-grow: 0;
     margin: 0px 4px;
 `;
 
@@ -73,41 +45,7 @@ const InputForm = Styled.input`
     box-sizing: border-box;
     border-radius: 4px;
 
-    /* Inside Auto Layout */
-
-    flex: none;
-    order: 1;
-    flex-grow: 0;
     margin: 0px 4px;  
-`;
-
-const RightButtonIcon = Styled.button`
-
-    /* Auto Layout */
-
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    padding: 8px;
-
-
-    width: 40px;
-    height: 40px;
-
-    background: #FFFFFF;
-    /* Primary / 06 - #1E9FD2 */
-
-    border: 1px solid #1E9FD2;
-    box-sizing: border-box;
-    border-radius: 4px;
-
-    /* Inside Auto Layout */
-
-    flex: none;
-    order: 2;
-    flex-grow: 0;
-    margin: 0px 4px;
 `;
 
 const Minus = Styled.div`
@@ -147,13 +85,13 @@ const PeoplePicker = ({ distributionIndex, type }) => {
 
   return (
     <PeoplePickerDiv>
-      <LeftButtonIcon
+      <ButtonIcon
         key="minusBtn"
         onClick={(e) => handleChange(e, "minus", distributionIndex, type.type)}
         type="button"
       >
         <Minus></Minus>
-      </LeftButtonIcon>
+      </ButtonIcon>
 
       <InputForm
         type="text"
@@ -161,13 +99,13 @@ const PeoplePicker = ({ distributionIndex, type }) => {
         onChange={(e) => handleChange(e, "input", distributionIndex, type.type)}
       />
 
-      <RightButtonIcon
+      <ButtonIcon
         key="plusBtn"
         onClick={(e) => handleChange(e, "plus", distributionIndex, type.type)}
         type="button"
       >
         <Plus></Plus>
-      </RightButtonIcon>
+      </ButtonIcon>
     </PeoplePickerDiv>
   );
 };

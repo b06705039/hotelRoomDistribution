@@ -30,8 +30,8 @@ function NumberPickerProvider({ children }) {
     },
   ];
 
-  const [number, setNumber] = useState(data[1].number);
-  const [rooms, setRooms] = useState(data[1].rooms);
+  const [number, setNumber] = useState(data[2].number);
+  const [rooms, setRooms] = useState(data[2].rooms);
   const [distribution, setDistribution] = useState();
 
   const handleDistribution = () => {
@@ -42,7 +42,7 @@ function NumberPickerProvider({ children }) {
       let childNum = 0;
       if (remainNum > 0) {
         adultNum = Math.min(room.min, remainNum);
-        remainNum -= room.max;
+        remainNum -= adultNum;
       }
       updateDistributtionArr.push({
         adult: adultNum,

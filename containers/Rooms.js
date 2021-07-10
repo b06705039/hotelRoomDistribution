@@ -15,7 +15,7 @@ export default function rooms() {
       {rooms.map((room, index) => (
         <div key={index}>
           <Room distributionIndex={index} />
-          <Divider />
+          {rooms.length - 1 !== index && <Divider />}
         </div>
       ))}
     </RoomsDiv>
