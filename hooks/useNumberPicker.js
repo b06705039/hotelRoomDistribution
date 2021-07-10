@@ -9,6 +9,17 @@ export function useNumberPicker() {
 }
 
 function NumberPickerProvider({ children }) {
+  const types = [
+    {
+      type: "大人",
+      yearFloor: 20,
+    },
+    {
+      type: "小孩",
+      yearFloor: 0,
+    },
+  ];
+
   const [number, setNumber] = useState(data[1].number);
   const [rooms, setRooms] = useState(data[1].rooms);
   const [distribution, setDistribution] = useState();
@@ -38,6 +49,7 @@ function NumberPickerProvider({ children }) {
     setRooms,
     distribution,
     setDistribution,
+    types,
   };
 
   return (

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Styled from "styled-components";
-import RoomParent from "./RoomParent";
-import RoomChildren from "./RoomChildren";
+import RoomType from "./RoomType";
 import { useNumberPicker } from "../hooks/useNumberPicker";
 
 const RoomDiv = Styled.div`
@@ -38,7 +37,7 @@ const Roomtitle = Styled.div`
 `;
 
 export default function Room({ distributionIndex }) {
-  const { distribution } = useNumberPicker();
+  const { distribution, types } = useNumberPicker();
   const [number, setNumber] = useState();
 
   useEffect(() => {
@@ -54,8 +53,17 @@ export default function Room({ distributionIndex }) {
   return (
     <RoomDiv>
       <Roomtitle>房間：{number}人</Roomtitle>
-      <RoomParent distributionIndex={distributionIndex}></RoomParent>
-      <RoomChildren distributionIndex={distributionIndex}></RoomChildren>
+      <RoomType
+        distributionIndex={distributionIndex}
+        type={types[0]}
+      ></RoomType>
+      <RoomType
+        distributionIndex={distributionIndex}
+        type={types[1]}
+      ></RoomType>
+
+      {/* <RoomParent distributionIndex={distributionIndex}></RoomParent>
+      <RoomChildren distributionIndex={distributionIndex}></RoomChildren> */}
     </RoomDiv>
   );
 }

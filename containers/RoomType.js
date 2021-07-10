@@ -1,10 +1,10 @@
 import React from "react";
-import styled from "@emotion/react";
+import Styled from "styled-components";
 import PeopleType from "../components/PeopleType";
 import PeoplePicker from "../components/PeoplePicker";
 import { useNumberPicker } from "../hooks/useNumberPicker";
 
-const RoomTypeDiv = styled.div`
+const RoomTypeDiv = Styled.div`
   display: flex;
   flex-direction: row;
   align-items: flex-start;
@@ -16,17 +16,17 @@ const RoomTypeDiv = styled.div`
   margin: 16px 0px;
 `;
 
-export default function RoomType({ distributionIndex }) {
-  const { types } = useNumberPicker();
+const RoomType = ({ distributionIndex, type }) => {
+  console.log(type);
 
   return (
     <>
-      {types.map((type, index) => (
-        <RoomTypeDiv key={index}>
-          <PeopleType type={type} />
-          <PeoplePicker distributionIndex={distributionIndex} type={type} />
-        </RoomTypeDiv>
-      ))}
+      <RoomTypeDiv>
+        <PeopleType type={type} />
+        <PeoplePicker distributionIndex={distributionIndex} type={type} />
+      </RoomTypeDiv>
     </>
   );
-}
+};
+
+export default RoomType;
