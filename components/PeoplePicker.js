@@ -1,5 +1,7 @@
-import React from 'react'
-import Styled from 'styled-components'
+import { id } from "postcss-selector-parser";
+import React, { useState, useEffect } from "react";
+import Styled from "styled-components";
+import { useNumberPicker } from "../hooks/useNumberPicker";
 
 const PeoplePickerDiv = Styled.div`
     /* Auto Layout */
@@ -23,14 +25,15 @@ const PeoplePickerDiv = Styled.div`
     flex-grow: 0;
     // margin: 0px 16px;
 
-`
+`;
 
 const LeftButtonIcon = Styled.button`
     /* Auto Layout */
 
     display: flex;
     flex-direction: row;
-    align-items: flex-start;
+    align-items: center;
+    justify-content: center;
     padding: 8px;
 
     width: 40px;
@@ -52,13 +55,16 @@ const LeftButtonIcon = Styled.button`
     order: 0;
     flex-grow: 0;
     margin: 0px 4px;
-`
+`;
 
 const InputForm = Styled.input`
     display: flex;
-    flex-direction: row;
-    align-items: flex-start;
     padding: 10px 4px;
+    text-align: center;
+
+    font-family: Noto Sans;
+    font-style: normal;
+    font-weight: normal;
 
     width: 40px;
     height: 40px;
@@ -73,7 +79,7 @@ const InputForm = Styled.input`
     order: 1;
     flex-grow: 0;
     margin: 0px 4px;
-`
+`;
 const RightButtonIcon = Styled.button`
 
     /* Auto Layout */
@@ -101,18 +107,7 @@ const RightButtonIcon = Styled.button`
     order: 2;
     flex-grow: 0;
     margin: 0px 4px;
-`
-
-const ButtonSignBlock = Styled.div`
-    position: static;
-    width: 24px;
-    height: 24px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    order: 0;
-`
+`;
 
 const Minus = Styled.div`
     width: 19.71px;
@@ -120,8 +115,7 @@ const Minus = Styled.div`
     display: flex;
 
     background: #1E9FD2;
-`
-
+`;
 
 const Plus = Styled.div`
     display:flex;
@@ -134,25 +128,52 @@ const Plus = Styled.div`
     background-position:center;
     background-size: 19.71px 1.29px, 1.29px 19.71px;
     background-repeat:no-repeat;
-`
+`;
 
-export default function PeoplePicker() {
-    return (
-        <PeoplePickerDiv>
-            <LeftButtonIcon>
-                <ButtonSignBlock>
-                    <Minus />
-                </ButtonSignBlock>
-            </LeftButtonIcon>
+const PeoplePicker = ({ distributionIndex, type }) => {
+  const { distribution } = useNumberPicker();
+  const [inputNum, setInputNum] = useState();
 
-            <InputForm type="text" />
-                {/* <input type="text" name="inputNumber" /> */}
+  const handleChange = () => {
+    console.log("into handle change, ");
+  };
 
-            <RightButtonIcon>
-                {/* <ButtonSignBlock> */}
-                    <Plus/>
-                {/* </ButtonSignBlock> */}
-            </RightButtonIcon>
-        </PeoplePickerDiv>
-    )
-}
+  useEffect(() => {
+    if (distribution) {
+      if (type.type === "大人") {
+        setInputNum(() => distribution[distributionIndex].adult);
+      } else if (type.type === "小孩") {
+        setInputNum(() => distribution[distributionIndex].child);
+      }
+    }
+  });
+
+  return (
+    <PeoplePickerDiv>
+      <LeftButtonIcon
+        key="minusBtn"
+        onChange={(e) => {
+          console.log("minus been onChange");
+        }}
+        onClick={() => handleChange()}
+        type="button"
+      >
+        <Minus></Minus>
+      </LeftButtonIcon>
+
+      <InputForm
+        type="text"
+        defaultValue={inputNum}
+        onChange={(e) => {
+          console.log("input change");
+        }}
+      />
+
+      <RightButtonIcon key="plusBtn" onClick={handleChange} type="button">
+        <Plus></Plus>
+      </RightButtonIcon>
+    </PeoplePickerDiv>
+  );
+};
+
+export default PeoplePicker;

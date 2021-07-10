@@ -17,8 +17,6 @@ const RoomTypeDiv = Styled.div`
 `;
 
 const RoomType = ({ distributionIndex, type }) => {
-  console.log(type);
-
   return (
     <>
       <RoomTypeDiv>

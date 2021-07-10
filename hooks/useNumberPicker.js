@@ -24,7 +24,7 @@ function NumberPickerProvider({ children }) {
   const [rooms, setRooms] = useState(data[1].rooms);
   const [distribution, setDistribution] = useState();
 
-  useEffect(() => {
+  const handleDistribution = () => {
     let updateDistributtionArr = [];
     let remainNum = number;
     rooms.map((room) => {
@@ -40,6 +40,10 @@ function NumberPickerProvider({ children }) {
       });
     });
     setDistribution(() => updateDistributtionArr);
+  };
+
+  useEffect(() => {
+    handleDistribution();
   }, []);
 
   const value = {

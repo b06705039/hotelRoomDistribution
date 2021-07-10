@@ -1,29 +1,36 @@
-const path = require('path')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
+const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
-    output: {
-        path: path.join(__dirname, '/dist'),
-        filename: 'index.bundle.js'
+  output: {
+    path: path.join(__dirname, "/dist"),
+    filename: "index.bundle.js",
+  },
+  devServer: {
+    port: 3000,
+    https: false,
+    public: "http://localhost:3000",
+    watchContentBase: true,
+    headers: {
+      "Access-Control-Allow-Origin": "*",
     },
-    devServer: {
-        port: 3000,
-        watchContentBase: true
-    },
-    module: {
-        rules: [
-            {
-                test: /\.(js|jsx)$/,
-                exclude: /nodeModules/,
-                use: {
-                    loader: 'babel-loader'
-                }
-            },
-            {
-                test: /\.css$/,
-                use: ['style-loader', 'css-loader']
-            }
-        ]
-    },
-    plugins: [new HtmlWebpackPlugin({ template: './src/index.html' })]
-}
+    hotOnly: false,
+    disableHostCheck: true,
+  },
+  module: {
+    rules: [
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_Modules/,
+        use: {
+          loader: "babel-loader",
+        },
+      },
+      {
+        test: /\.css$/,
+        use: ["style-loader", "css-loader"],
+      },
+    ],
+  },
+  plugins: [new HtmlWebpackPlugin({ template: "./src/index.html" })],
+};
