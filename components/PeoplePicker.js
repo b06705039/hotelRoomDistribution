@@ -76,12 +76,12 @@ const PeoplePicker = ({ distributionIndex, type }) => {
   useEffect(() => {
     if (distribution) {
       if (type.type === "大人") {
-        setInputNum(() => distribution[distributionIndex].adult);
+        setInputNum(() => distribution[distributionIndex].adult | 0);
       } else if (type.type === "小孩") {
-        setInputNum(() => distribution[distributionIndex].child);
+        setInputNum(() => distribution[distributionIndex].child | 0);
       }
     }
-  });
+  }, [distribution]);
 
   return (
     <PeoplePickerDiv>
@@ -95,8 +95,9 @@ const PeoplePicker = ({ distributionIndex, type }) => {
 
       <InputForm
         type="text"
-        defaultValue={inputNum}
+        value={inputNum}
         onChange={(e) => handleChange(e, "input", distributionIndex, type.type)}
+        onBlur={(e) => handleChange(e, "input", distributionIndex, type.type)}
       />
 
       <ButtonIcon

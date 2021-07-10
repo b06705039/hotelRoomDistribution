@@ -68,7 +68,7 @@ function NumberPickerProvider({ children }) {
 
     // get new value
     if (changeType === "input") {
-      changeValue = parseInt(e.target.value);
+      changeValue = parseInt(e.target.value | "0");
     } else if (changeType === "minus") {
       changeValue -= 1;
     } else if (changeType === "plus") {
@@ -76,11 +76,7 @@ function NumberPickerProvider({ children }) {
     }
 
     // check if in range
-    if (
-      (changeValue + pairValue > rooms[roomId].max) |
-      (changeValue + pairValue < rooms[roomId].min) |
-      (changeValue < 0)
-    ) {
+    if ((changeValue + pairValue > rooms[roomId].max) | (changeValue < 0)) {
       return;
     }
 
